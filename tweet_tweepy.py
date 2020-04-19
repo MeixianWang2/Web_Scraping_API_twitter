@@ -2,16 +2,10 @@ import tweepy  # https://github.com/tweepy/tweepy
 import pandas as pd
 from time import time
 
-access_token = "826232848445239297-Rbeja9Jd0J2zCLaxb8KQnYCH6YH9cBL"
-access_token_secret = "VLFgBxjvsWvk55ua2YiSNSAEKfuXR39hTMj4KE5yK33oZ"
-consumer_key = "YLOjicGAg8AlB4XWAiIdcYnZ1"
-consumer_secret = "Oy5Jtu30y9xB5ses7NDX5LXcaHxoxTuRQGJN0hCiqU5HQURRmb"
-
-methods = ['author', 'destroy', 'entities', 'extended_entities',
-           'id', 'in_reply_to_status_id',
-           'in_reply_to_status_id_str', 'in_reply_to_user_id', 'in_reply_to_user_id_str',
-           'parse_list', 'retweet', 'retweeted',
-           'retweets', 'source', 'source_url', 'user']
+access_token = "access_token"
+access_token_secret = "access_token_secret"
+consumer_key = "consumer_key"
+consumer_secret = "consumer_secret"
 
 
 def get_all_tweets(screen_name):
@@ -21,7 +15,7 @@ def get_all_tweets(screen_name):
     # consumer_secret = ""
     access_key = access_token
     access_secret = access_token_secret
-    # Twitter only allows access to a users most recent 3240 tweets with this method
+    # Twitter only allows access to a users most recent 3240 tweets with this timeline
     # authorize twitter, initialize tweepy
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_key, access_secret)
@@ -93,18 +87,12 @@ def get_index(data):
 def main():
     data = get_list("data/Company CEOs and Social Media.csv", "CEO Twitter")
     list = get_name(data)
-
-
-    print(list[0:510])
-
-
-    # for name in list[8]:
-    #     try:
-    #         get_all_tweets(name)
-    #     except:
-    #         print(name)
-    #         continue
-
+    for name in list:
+        try:
+            get_all_tweets(name)
+        except:
+            print(name)
+            continue
 
 if __name__ == '__main__':
     main()
