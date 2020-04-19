@@ -1,10 +1,10 @@
 import requests
-import pymysql
+import pymysql #connect to sql and save data to sql
 import json
 import time
 from datetime import datetime
 import sys
-
+#connect to sql
 conn = pymysql.connect(host='localhost',
                            port=3306,
                            user='root',
@@ -13,20 +13,25 @@ conn = pymysql.connect(host='localhost',
                            charset='UTF8MB4')
 cursor = conn.cursor()
 
-endpoint = "https://api.twitter.com/1.1/tweets/search/fullarchive/developing.json"
-# #  endpoint = "https://api.twitter.com/1.1/tweets/search/30day/sandbox.json"
-# #
-headers = {"Authorization":"Bearer AAAAAAAAAAAAAAAAAAAAAJh5DQEAAAAAjCz8jvR3LIv8gF%2F2cVdsclN72SU%3DIz4LVXcM8V22zWNPZEX0ZMvONWX59P9UtweTUbXZSt5XqysrYx", "Content-Type": "application/json"}
+#connect to twitter search api (premium: full_archive or 30 days)
+#fullarchive
+endpoint = "https://api.twitter.com/1.1/tweets/search/fullarchive/your_app_name.json"
+# or 30 days
+# endpoint = "https://api.twitter.com/1.1/tweets/search/30day/your_app_name.json"
+# get bearer token
+headers = {"Authorization":"Bearer token_name", "Content-Type": "application/json"}
 
+# write query
 # full_archive
 # data = '{"query":"(#covid_19 OR #Covid19 OR #Covid OR #Coronavirus OR #Coronavirus19) lang:en", "fromDate": "202003010000", "toDate": "202003310000", "maxResults": 500}'
 
+# get all tweets by company screen name
 def get_all_tweets(company):
     token_count = 0
     data = '{"query":"from: ' + company + ' -is:retweet -is:reply lang:en ", "maxResults": 500, "fromDate": "201001010000", "toDate": "202003310000"}'
     print(data)
     response = requests.post(endpoint, data=data, headers=headers).json()
-    # save amazon api results
+    # save api results
     tmpresponse = '' + company + '_response.json'
     with open(tmpresponse, 'a') as outfile:
         json.dump(response, outfile)
@@ -122,20 +127,7 @@ def get_all_tweets(company):
         time.sleep(120)
 
 if __name__ == '__main__':
-    companies = ['Chevron']
-                 # 'Merck', 'WellsFargo', 'pfizer', 'CocaCola', 'comcast', 'Boeing', 'Cisco',
-                 # 'pepsi',
-                 # 'Walmart', 'Citi', 'Medtronic', 'AbbottGlobal', 'McDonalds', 'Adobe', 'salesforce', 'Amgen', 'netflix',
-                 # 'bmsnews', 'Costco', 'InsidePMI', 'nvidia', 'Accenture', 'thermofisher', 'honeywell', 'PayPal',
-                 # 'Broadcom',
-                 # 'UnionPacific', 'Oracle', 'Nike', 'IBM', 'nexteraenergy', 'TXInstruments', 'Lindeplc', 'LillyPad',
-                 # 'Starbucks', 'CVSHealth', 'LockheedMartin', '3M', 'Qualcomm', 'DanaherCareers', 'generalelectric',
-                 # 'AltriaNews', 'Lowes', 'usbank', 'FISGlobal', 'GileadSciences', 'BookingHoldings', 'AmericanExpress',
-                 # 'UPS',
-                 # 'CaterpillarInc', 'MDLZ', 'GetSpectrum', 'Cigna', 'ADP', 'CMEGroup', 'BBT', 'TJXCareers', 'AnthemInc',
-                 # 'GoldmanSachs', 'Chubb', 'BDandCo', 'conocophillips', 'PNCBank', 'SPGlobal', 'Intuit', 'IntuitiveSurg',
-                 # 'DominionEnergy', 'DukeEnergy', 'Fiserv', 'Target', 'Stryker_Jobs', 'SouthernCompany', 'MorganStanley',
-                 # 'bostonsci', 'Allergan', 'Raytheon', 'Zoetis', 'CP_News', 'blackrock', 'Prologis', 'CharlesSchwab']
+    companies = ['C1','C2','C3']
     for company in companies:
             try:
                 get_all_tweets(company)
