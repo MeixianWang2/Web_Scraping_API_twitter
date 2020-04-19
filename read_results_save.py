@@ -5,8 +5,8 @@ from datetime import datetime
 conn = pymysql.connect(host='localhost',
                            port=3306,
                            user='root',
-                           passwd='4320241oK@',
-                           database ='twitter_500',
+                           passwd='password',
+                           database ='database_name',
                            charset='UTF8MB4')
 cursor = conn.cursor()
 def inputdict4sql(item, item_name):
@@ -22,12 +22,7 @@ with open('amazon_response_token.json', 'r') as file:
     # print(data)
     response = '[' + data + ']'
 results = json.loads(response)
-# print(results[0])
 
-# print(results[1])
-# print(1)
-
-# print(results[3])
 for result in results:
     # print(result)
     # print(result['results'])
@@ -58,11 +53,11 @@ for result in results:
                 conn.commit()
             except:
                 print(item)
-                with open('amazon_except.json', 'a') as outfile:
+                with open('exception.json', 'a') as outfile:
                     json.dump(item, outfile)
     except:
         print(result)
-        with open('amazon_except.json', 'a') as outfile:
+        with open('exception.json', 'a') as outfile:
             json.dump(results, outfile)
 
 
