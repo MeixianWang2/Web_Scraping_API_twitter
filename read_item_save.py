@@ -5,8 +5,8 @@ from datetime import datetime
 conn = pymysql.connect(host='localhost',
                            port=3306,
                            user='root',
-                           passwd='4320241oK@',
-                           database ='twitter_500',
+                           passwd='password',
+                           database ='database_name',
                            charset='UTF8MB4')
 cursor = conn.cursor()
 
@@ -17,8 +17,6 @@ with open('amazon_item_token.json', 'r') as file:
     response = '['+data +']'
     print(response)
 items = json.loads(response)
-print(1)
-print(items)
 
 def inputdict4sql(item,item_name):
     try:
