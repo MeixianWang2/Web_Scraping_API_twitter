@@ -10,12 +10,7 @@ consumer_secret = "consumer_secret"
 
 def get_all_tweets(screen_name):
     start = time()
-    # Twitter API credentials
-    # consumer_key = ""
-    # consumer_secret = ""
-    access_key = access_token
-    access_secret = access_token_secret
-    # Twitter only allows access to a users most recent 3240 tweets with this timeline
+    # Twitter only allows access to a users most recent 3200 tweets with this timeline
     # authorize twitter, initialize tweepy
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_key, access_secret)
@@ -49,17 +44,14 @@ def get_all_tweets(screen_name):
     df.to_csv(str(screen_name) + '.csv', index=False)
     print('used: {:.2f} s'.format(time() - start))
 
-
 def get_data(path):
     data = pd.read_csv(path)
     return data
-
 
 def get_list(path, column):
     data = get_data(path)
     data = data[column]
     return data
-
 
 def get_name(company_list):
     company_name = []
@@ -73,7 +65,6 @@ def get_name(company_list):
 
     return company_name
 
-
 def get_index(data):
     index = 0
     for i in data:
@@ -82,7 +73,6 @@ def get_index(data):
         else:
             index = index + 1
     return index
-
 
 def main():
     data = get_list("data/Company CEOs and Social Media.csv", "CEO Twitter")
