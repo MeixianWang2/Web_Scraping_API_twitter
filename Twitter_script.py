@@ -23,3 +23,4 @@ def get_all_tweets(screen_name):
 
 if __name__ == '__main__':
     get_all_tweets('google')
+    
